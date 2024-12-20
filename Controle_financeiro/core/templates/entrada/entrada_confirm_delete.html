@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Confirmar Exclusão{% endblock %}
+{% block content %}
+<div class="my-3 d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card p-4" style="max-width: 500px; width: 100%; box-shadow: 0px 4px 10px rgba(255, 0, 0, 0.1);">
+        <h2 class="text-center text-danger mb-4">Confirmar Exclusão</h2>
+        <div class=" p-4">
+            <p><strong>Nome:</strong> {{ entrada.nome }}</p>
+            <p><strong>Valor:</strong> R$ {{ entrada.valor|floatformat:2 }}</p>
+            <p><strong>Categoria:</strong> {{ entrada.categoria }}</p>
+            <p><strong>Data:</strong> {{ entrada.data_operacao|date:"d/m/Y" }}</p>
+            <p><strong>Descrição:</strong> {{ entrada.descricao }}</p>
+        </div>
+
+        <!-- Botões de Exclusão e Cancelamento -->
+        <div class="mt-4 text-center">
+            <form action="{% url 'excluir_entrada' entrada.id %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger mx-2">Excluir</button>
+            </form>
+            <!-- Botão de Cancelar -->
+            <a href="{% url 'entrada_detalhes' entrada.id %}" class="btn btn-secondary mx-2">Cancelar</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

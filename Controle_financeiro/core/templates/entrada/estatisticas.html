@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Estatísticas - Gerenciamento Financeiro{% endblock %}
+
+{% block content %}
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+</head>
+
+<div class="container">
+    <!-- Dados Totais -->
+    <div>
+        <div class="my-3">
+            <div class="card p-3 align-items-center">
+                <h1><strong>Saldo:</strong> R$ {{ saldo_total }} </h1>
+                <canvas id="donutChartTodos" width="200" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="row my-3">
+        <div class="col-md-3">
+            <div class="card p-3 align-items-center">
+                <h4>{{ ano_atual }}</h4>
+                <canvas id="donutChartAno" width="200" height="200"></canvas>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card p-3 align-items-center">
+                <h4>{{ mes_atual }}/{{ ano_atual }}</h4>
+                <canvas id="donutChartMes" width="200" height="200"></canvas>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card p-3 align-items-center">
+                <h4>Últimos 365 dias</h4>
+                <canvas id="donutChart365" width="200" height="200"></canvas>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card p-3 align-items-center">
+                <h4>Último 30 dias</h4>
+                <canvas id="donutChart30" width="200" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <!-- Gráfico de Barras -->
+    <div class="my-4 card p-3 ">
+        <h4>Gráfico de Gastos e Ganhos por Categoria</h4>
+        <canvas id="barChart"></canvas>
+    </div>
+
+    <div>   
+        <div class="  full-width-button  mt-2">
+            <a href="{% url 'dashboard' %}" class="btn btn-outline-dark full-width-button">Voltar para dashboard</a>
+        </div>
+    </div>
+
+    <script>
+        // Coletando dados para o gráfico
+        const categorias = [{% for categoria in categorias %}"{{ categoria.nome }}"{% if not forloop.last %}, {% endif %}{% endfor %}];
+        const ganhosAno = [{% for categoria in categorias %}{{ categoria.ganhos_ano|default:0 }}{% if not forloop.last %}, {% endif %}{% endfor %}];
+        const ganhosMes = [{% for categoria in categorias %}{{ categoria.ganhos_mes|default:0 }}{% if not forloop.last %}, {% endif %}{% endfor %}];
+        const ganhos30 = [{% for categoria in categorias %}{{ categoria.ganhos_30|default:0 }}{% if not forloop.last %}, {% endif %}{% endfor %}];
+        const ganhos365 = [{% for categoria in categorias %}{{ categoria.ganhos_365|default:0 }}{% if not forloop.last %}, {% endif %}{% endfor %}];
+        
+        const gastosAno = [{% for categoria in categorias %}{{ categoria.gastos_ano|default:0 }}{% if not forloop.last %}, {% endif %}{% endfor %}];
+        const gastosMes = [{% for categoria in categorias %}{{ categoria.gastos_mes|default:0 }}{% if not forloop.last %}, {% endif %}{% endfor %}];
+        const gastos30 = [{% for categoria in categorias %}{{ categoria.gastos_30|default:0 }}{% if not forloop.last %}, {% endif %}{% endfor %}];
+        const gastos365 = [{% for categoria in categorias %}{{ categoria.gastos_365|default:0 }}{% if not forloop.last %}, {% endif %}{% endfor %}];
+
+        // Configuração do gráfico
+        const data = {
+            labels: categorias,  // Categorias
+            datasets: [
+                {
+                    label: 'Ganhos (Este ano)',
+                    data: ganhosAno,  // Dados de Ganhos
+                    backgroundColor: '#006400',  // Verde escuro
+                    borderColor: '#006400',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Ganhos (Este mês)',
+                    data: ganhosMes,  // Dados de Ganhos
+                    backgroundColor: '#90EE90',  // Verde claro
+                    borderColor: '#90EE90',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Ganhos (últimos 30 dias)',
+                    data: ganhos30,  // Dados de Ganhos
+                    backgroundColor: '#ADD8E6',  // Azul claro
+                    borderColor: '#ADD8E6',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Ganhos (últimos 365 dias)',
+                    data: ganhos365,  // Dados de Ganhos
+                    backgroundColor: '#00008B',  // Azul escuro
+                    borderColor: '#00008B',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Gastos (Este ano)',
+                    data: gastosAno,  // Dados de Gastos
+                    backgroundColor: '#8B0000',  // Vermelho escuro
+                    borderColor: '#8B0000',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Gastos (Este mês)',
+                    data: gastosMes,  // Dados de Gastos
+                    backgroundColor: '#FF6347',  // Vermelho claro
+                    borderColor: '#FF6347',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Gastos (últimos 30 dias)',
+                    data: gastos30,  // Dados de Gastos
+                    backgroundColor: '#D8BFD8',  // Roxo claro
+                    borderColor: '#D8BFD8',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Gastos (últimos 365 dias)',
+                    data: gastos365,  // Dados de Gastos
+                    backgroundColor: '#800080',  // Roxo escuro
+                    borderColor: '#800080',
+                    borderWidth: 1
+                }
+            ]
+        };
+
+        const config = {
+            type: 'bar',
+            data: data,
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function (value) {
+                                return 'R$ ' + value;
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        // Criação do gráfico
+        const ctx = document.getElementById('barChart').getContext('2d');
+        new Chart(ctx, config);
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+                // Chamada da função após a página ser carregada
+            criarDonutChart('donutChartAno', {{ ganhos_totais_ano }}, {{ gastos_totais_ano }}, {{ saldo_last_ano }});
+            criarDonutChart('donutChartMes', {{ ganhos_totais_mes }}, {{ gastos_totais_mes }}, {{ saldo_last_mes }});
+            criarDonutChart('donutChart365', {{ ganhos_totais_last_365 }}, {{ gastos_totais_last_365 }}, {{ saldo_last_365 }});
+            criarDonutChart('donutChart30', {{ ganhos_totais_last_30 }}, {{ gastos_totais_last_30 }}, {{ saldo_last_30 }});
+            criarDonutChart('donutChartTodos', {{ ganhos_totais}}, {{ gastos_totais}}, {{ saldo_total }});
+        });
+    </script>
+<!--
+zona nova de teste
+-->
+
+
+
+<!--
+fim da zona nova de teste
+-->  
+
+    <script src="{% static 'app/js/index.js' %}"></script>
+
+</div>
+
+{% endblock %}

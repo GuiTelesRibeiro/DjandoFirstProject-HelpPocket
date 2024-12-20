@@ -1,0 +1,12 @@
+.hero-img {
+    width: 100%;
+    height: auto;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+}
+.full-width-button {
+    width: 100%;
+}

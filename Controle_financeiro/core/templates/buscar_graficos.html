@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráficos</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Visualizar Gráficos</h1>
+    <form method="GET">
+        <label for="ano">Ano:</label>
+        <select name="ano" id="ano" required>
+            <option value="">Selecione o ano</option>
+            {% for ano in anos %}
+                <option value="{{ ano }}" {% if ano == ano_escolhido %}selected{% endif %}>{{ ano }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="mes">Mês:</label>
+        <select name="mes" id="mes" required>
+            <option value="">Selecione o mês</option>
+            {% for mes in meses %}
+                <option value="{{ mes }}" {% if mes == mes_escolhido %}selected{% endif %}>
+                    {{ mes|date:"F" }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Buscar</button>
+    </form>
+
+    <h2>Gráfico do Ano</h2>
+    <canvas id="graficoAno"></canvas>
+    <h2>Gráfico do Mês</h2>
+    <canvas id="graficoMes"></canvas>
+
+    <script>
+        const dadosAno = {
+            labels: [{% for mes in dados_ano %}"{{ mes.data_operacao__month }}",{% endfor %}],
+            datasets: [{
+                label: 'Valores por mês',
+                data: [{% for mes in dados_ano %}{{ mes.total }},{% endfor %}],
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderWidth: 1
+            }]
+        };
+
+        const dadosMes = {
+            labels: [{% for dia in dados_mes %}"{{ dia.data_operacao__day }}",{% endfor %}],
+            datasets: [{
+                label: 'Valores por dia',
+                data: [{% for dia in dados_mes %}{{ dia.total }},{% endfor %}],
+                borderColor: 'rgba(153, 102, 255, 1)',
+                backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                borderWidth: 1
+            }]
+        };
+
+        new Chart(document.getElementById('graficoAno'), {
+            type: 'line',
+            data: dadosAno,
+        });
+
+        new Chart(document.getElementById('graficoMes'), {
+            type: 'line',
+            data: dadosMes,
+        });
+    </script>
+</body>
+</html>

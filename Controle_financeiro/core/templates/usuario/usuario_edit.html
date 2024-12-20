@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Editar Perfil{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card p-4" style="max-width: 500px; width: 100%; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);">
+        <h1 class="text-center mb-4">Editar Perfil</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <!-- Nome de Usuário -->
+            <div class="mb-3">
+                <label for="username" class="form-label">Nome de Usuário</label>
+                <input type="text" id="username" name="username" class="form-control" 
+                       value="{{ request.user.username }}" required>
+            </div>
+
+            <!-- E-mail -->
+            <div class="mb-3">
+                <label for="email" class="form-label">E-mail</label>
+                <input type="email" id="email" name="email" class="form-control" 
+                       value="{{ request.user.email }}" required>
+            </div>
+
+            <!-- Botões -->
+            <button type="submit" class="btn btn-outline-secondary  w-100">Salvar Alterações</button>
+        </form>
+        <p class="text-center mt-3">
+            <a href="{% url 'usuario_detalhes' %}" class="text-decoration-none">Cancelar e retornar</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

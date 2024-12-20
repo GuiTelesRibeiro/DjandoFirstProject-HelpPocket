@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Gerenciamento Financeiro - Home{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="mt-2">
+    <div class="container card border-0 mb-2">
+        <img src="{% static 'app/images/HelpPocket/Topo.png' %}" class="card-img hero-img" alt="Imagem de fundo">
+    </div>
+    <div>
+        <div class="container mb-2 full-width-button">
+            <a href="{% url 'sign_up' %}" class="btn btn-secondary full-width-button mb-2">Comece Agora</a>
+            <a href="#features" class="btn btn-outline-secondary  full-width-button">Veja como funciona</a>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features">
+    <div class="container card-body">
+        <h2 class="text-center mb-4">Recursos para Facilitar seu Controle Financeiro</h2>
+        <div class="row text-center">
+            <div class="col-md-4">
+                <img src="{% static 'app/images/HelpPocket/Cadeado.icon.png' %}" alt="Cadastro Seguro" height="160">
+                <h3>Cadastro Simples e Seguro</h3>
+                <p>Crie sua conta em minutos e comece a gerenciar suas finanças com facilidade.</p>
+            </div>
+            <div class="col-md-4">
+                <img src="{% static 'app/images/HelpPocket/Money.icon.png' %}" alt="Entradas e Saídas" height="160">
+                <h3>Entradas e Saídas Personalizadas</h3>
+                <p>Classifique seus gastos por categoria e tenha uma visão clara de suas despesas.</p>
+            </div>
+            <div class="col-md-4">
+                <img src="{% static 'app/images/HelpPocket/Grafico.icon.png' %}" alt="Gráficos" height="160">
+                <h3>Gráficos de Análise</h3>
+                <p>Visualize seus gastos por dia, semana, mês ou ano e entenda seus hábitos de consumo.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Gráficos Section -->
+<section class="bg-dark py-5">
+    <div class="container text-center text-white">
+        <h2>Entenda Seus Gastos com Gráficos Interativos</h2>
+        <p>Descubra onde seu dinheiro está indo e ajuste seu orçamento conforme seus objetivos financeiros.</p>
+    </div>
+</section>
+
+<!-- Depoimentos Section -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Nossos Usuários Confiam e Recomendam</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="d-flex align-items-center p-3">
+                        <img src="{% static 'app/images/HelpPocket/Persona.icon.png' %}" class="img-fluid rounded-circle testimonial-image" alt="Cliente 1" style="width: 80px; height: 80px;">
+                        <div class="ms-3">
+                            <p>"Este app transformou minha forma de ver minhas finanças. Agora, vejo exatamente para onde vai meu dinheiro!"</p>
+                            <footer class="blockquote-footer">João S.</footer>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="d-flex align-items-center p-3">
+                        <img src="{% static 'app/images/HelpPocket/Persona.icon.png' %}" class="img-fluid rounded-circle testimonial-image" alt="Cliente 1" style="width: 80px; height: 80px;">
+                        <div class="ms-3">
+                            <p>"Com a ajuda dos gráficos, consegui reduzir meus gastos em 20% nos últimos meses."</p>
+                            <footer class="blockquote-footer">Maria A.</footer>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Final Call to Action -->
+<section class="text-center py-5 bg-dark text-white">
+    <div class="container">
+        <h2>Pronto para assumir o controle das suas finanças?</h2>
+        <p>Crie sua conta gratuitamente e comece agora!</p>
+        <a href="{% url 'sign_up' %}" class="btn btn-light btn-lg">Cadastrar-se Agora</a>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}Nova Entrada{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card p-4" style="max-width: 600px; width: 100%; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);">
+        <h2 class="text-center mb-4">Adicionar Nova Entrada</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome</label>
+                <input type="text" name="nome" id="nome" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="valor" class="form-label">Valor da movimentação</label>
+                <input type="number" step="0.01" name="valor" id="valor" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="tipo" class="form-label">Tipo</label>
+                <select name="tipo" id="tipo" class="form-select" required>
+                    <option value="entrada">Entrada</option>
+                    <option value="saida">Saída</option>
+                </select>
+                <small class="form-text text-muted">Selecione o tipo da movimentação.</small>
+            </div>
+            <div class="mb-3">
+                <label for="categoria" class="form-label">Categoria</label>
+                <select name="categoria" id="categoria" class="form-select" onchange="toggleNovaCategoria()">
+                    <option value="">Selecione uma categoria</option>
+                    {% for categoria in categorias %}
+                        <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
+                    {% endfor %}
+                    <option value="nova">Nova Categoria</option>
+                </select>
+                <small class="form-text text-muted">Selecione uma categoria existente ou crie uma nova.</small>
+            </div>
+            <div class="mb-3" id="nova-categoria-div" style="display: none;">
+                <label for="nova_categoria" class="form-label">Nova Categoria</label>
+                <input type="text" name="nova_categoria" id="nova_categoria" class="form-control" placeholder="Digite uma nova categoria">
+            </div>
+            <div class="mb-3">
+                <label for="data_operacao" class="form-label">Data</label>
+                <input type="date" name="data_operacao" id="data_operacao" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="descricao" class="form-label">Descrição</label>
+                <textarea name="descricao" id="descricao" class="form-control" rows="3"></textarea>
+            </div>
+            <div class="mt-4 text-center">
+                <button type="submit" class="btn btn-success w-100 mb-2">Salvar</button>
+                <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary w-100">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    function toggleNovaCategoria() {
+        const categoriaSelect = document.getElementById('categoria');
+        const novaCategoriaDiv = document.getElementById('nova-categoria-div');
+        if (categoriaSelect.value === 'nova') {
+            novaCategoriaDiv.style.display = 'block';
+        } else {
+            novaCategoriaDiv.style.display = 'none';
+        }
+    }
+</script>
+{% endblock %}

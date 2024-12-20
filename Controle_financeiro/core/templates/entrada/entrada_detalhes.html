@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Detalhes da Entrada{% endblock %}
+
+{% block content %}
+<div class="my-3 d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card p-4" style="max-width: 500px; width: 100%; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);">
+        <h1 class="text-center mb-4">Detalhes da Entrada</h1>
+        <div class="card-body">
+            <h5 class="card-title">{{ entrada.nome }}</h5>
+            <p class="card-text"><strong>Valor:</strong> R$ {{ valor_absoluto }}</p>
+            <p class="card-text"><strong>Tipo:</strong> 
+                {% if entrada.valor >= 0 %}
+                    Entrada
+                {% else %}
+                    Saída
+                {% endif %}
+            </p>
+            <p class="card-text"><strong>Data da Operação:</strong> {{ entrada.data_operacao }}</p>
+            <p class="card-text"><strong>Categoria:</strong> {{ entrada.categoria.nome }}</p>
+            <p class="card-text"><strong>Descrição:</strong> {{ entrada.descricao }}</p>
+        </div>
+
+        <!-- Botões de Editar, Apagar e Voltar -->
+        <div class="mt-4 text-center align-items-center">
+            <!-- Botão de Editar -->
+            <a href="{% url 'editar_entrada' entrada.id %}" class="btn btn-secondary mx-2">Editar</a>
+
+            <!-- Botão de Apagar -->
+            <form action="{% url 'confirmar_exclusao' entrada.id %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger mx-2">Apagar</button>
+            </form>
+
+            <!-- Botão de Voltar -->
+            <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary mx-2">Voltar</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

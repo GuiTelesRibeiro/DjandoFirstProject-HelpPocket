@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Desativar Conta{% endblock %}
+
+{% block content %}
+<div class=" d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card p-4 text-center" style="max-width: 500px; width: 100%; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);">
+        <h1 class="text-warning mb-4">Desativar Conta</h1>
+        <p class="card-text mb-4">
+            Tem certeza de que deseja <strong>desativar sua conta</strong>?<br>
+            Esta ação irá desmarcar sua conta como ativa, o que impedirá o login até que seja reativada.
+        </p>
+        
+        <!-- Formulário de Desativação -->
+        <form method="POST" class="mb-3">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-warning w-100">Desativar Conta</button>
+        </form>
+
+        <!-- Botão de Cancelar -->
+        <a href="{% url 'usuario_detalhes' %}" class="btn btn-outline-secondary w-100">Cancelar</a>
+    </div>
+</div>
+{% endblock %}

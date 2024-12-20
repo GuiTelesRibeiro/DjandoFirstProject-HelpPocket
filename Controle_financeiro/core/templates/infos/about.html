@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Sobre{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class=" p-4" style="max-width: 600px; width: 100%; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);">
+        <h1 class="text-center mb-4">Sobre o HelpPocket</h1>
+        <p>Bem-vindo ao HelpPocket, seu aplicativo de gerenciamento financeiro. Nosso objetivo é ajudar você a controlar melhor suas finanças pessoais, registrar entradas e saídas de dinheiro, e fornecer gráficos para facilitar a visualização do seu fluxo financeiro.</p>
+        <p>O HelpPocket foi desenvolvido como parte da disciplina de Web 2 no curso de Licenciatura em Ciências da Computação no IFbaiano, com o intuito de fornecer uma ferramenta simples e intuitiva para o gerenciamento de finanças.</p>
+
+        <div class="card mt-4" style="box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);">
+            <div class="row g-0">
+                <div class="col-md-4 p-3">
+                    <img src="{% static 'app/images/HelpPocket/Perfil.png' %}" class="img-fluid rounded-start" alt="Foto do Desenvolvedor">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Desenvolvedor</h5>
+                        <p class="card-text">Este site foi desenvolvido por Guilherme Teles Ribeiro como parte do projeto acadêmico de Web 2. Para mais informações ou dúvidas, entre em contato!</p>
+                    </div>
+                </div>
+                <ul class="list-unstyled align-items-center text-center">
+                    <a href="https://www.instagram.com/gui_tellez/" target="_blank">Instagram</a>
+                    <a href="https://github.com/GuiTelesRibeiro" target="_blank">GitHub</a>
+                    <a href="0guilhermeribeiro.dev@gmail.com" target="_blank">Email</a>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

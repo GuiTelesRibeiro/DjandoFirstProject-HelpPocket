@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}Criar Conta{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card p-4" style="max-width: 400px; width: 100%; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);">
+        <h1 class="text-center mb-4">Criar Conta</h1>
+        <form method="post" action="{% url 'sign_up' %}">
+            {% csrf_token %}
+            
+            <!-- Username -->
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            
+            <!-- Email -->
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            
+            <!-- Senha -->
+            <div class="mb-3">
+                <label for="password" class="form-label">Senha</label>
+                <input type="password" class="form-control" id="password" name="password" minlength="8" required>
+            </div>
+            
+            <!-- Confirmar Senha -->
+            <div class="mb-3">
+                <label for="confirm_password" class="form-label">Confirmar Senha</label>
+                <input type="password" class="form-control" id="confirm_password" name="confirm_password" minlength="8" required>
+            </div>
+
+            <!-- Botão de cadastro -->
+            <button type="submit" class="btn btn-outline-secondary  w-100">Criar Conta</button>
+        </form>
+        
+        <!-- Link para Login -->
+        <p class="text-center mt-3">
+            Já tem uma conta? <a href="{% url 'sign_in' %}">Entrar</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
